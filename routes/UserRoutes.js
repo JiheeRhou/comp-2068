@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 });
 
 // Create a Multer instance with the defined storage engine
-const upload = multer({ storage });
+export const upload = multer({ storage });
 
 // Middleware to handle HTTP method issues
 const requestCheck = (req, _, next) => {

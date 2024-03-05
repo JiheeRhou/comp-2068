@@ -6,10 +6,12 @@ export const index = async (req, res, next) => {
     try {
         const applications = await Application.find();
 
-        res.render("application/index", {
-            applications,
-            title: "Application List"
-        });
+        if(req.accepts("html"))
+            res.render("applications/index", {
+                applications,
+                title: "Application List"
+            });
+        else res.json({ applications });
     } catch (error) {
         next(error);
     }
@@ -100,12 +102,33 @@ export const remove = async (req, res, next) => {
         req.session.notifications = [
             { alertType: "alert-success", message: "Application deleted successfully" }
         ];
+        res.redirect("/applications");
     } catch (error) {
         req.session.notifications = [
             {alertType: "alert-danger", message: "Application failed to delete" }
         ];
         next(error);
     }
+};
+
+export const requestToken = async (req, res, next) => {
+    const { key, secret } = req.body;
+    const application = Application.findOne({ key, secret });
+    
+    if (!application) {
+        res.status = 403;
+        return res.json({ status: 403, message: "FORBIDDEN" });
+    }
+
+    const token = jwt.sign({
+        id: application._id
+    }, process.env.SECRET_KEY);
+
+    res.json({ status: 200, token, message: "SUCCESS" });
+};
+
+export const authenticate = async (_, __, next) => {
+    passport.authenticate("jwt", { session: false }, next());
 };
 
 async function findAndVerifyApplication(req) {

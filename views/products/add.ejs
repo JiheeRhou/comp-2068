@@ -1,0 +1,15 @@
+<%- include("../shared/_header") %>
+
+<div class="container mt-5">
+    <h1>
+        <%= formType === "create" ? "Create New Product" : "Update Product" %>
+    </h1>
+
+    <hr class="my-5">
+
+    <%- include("./_form") %>
+
+    <a href="/products">Back to products</a>
+</div>
+
+<%- include("../shared/_footer") %>

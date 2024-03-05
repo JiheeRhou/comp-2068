@@ -1,0 +1,21 @@
+<%- include("../shared/_header") %>
+
+<div class="container mt-5">
+    <h1>Product View</h1>
+
+    <hr class="my-5">
+
+    <a href="/products/<%= product.id %>/edit">Edit product</a>
+    
+    <div>
+        <div>
+            <p>
+                <%= product.name %>
+            </p>
+        </div>
+    </div>
+
+    <a href="/products">Back to products</a>
+</div>
+
+<%- include("../shared/_footer") %>

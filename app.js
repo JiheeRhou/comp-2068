@@ -66,7 +66,7 @@ app.use((req, _, next) => {
 RoutesSetup(app);
 
 // Our error handler
-app.use((error, _, res, __) => {
+app.use((error, req, res, __) => {  // eslint-disable
     // Converts string errors to proper errors
     if (typeof error === "string") {
         const error = new Error(error);
@@ -85,16 +85,15 @@ app.use((error, _, res, __) => {
                     { alertType: "alert-danger", message: error.message }
                 ];
             }
+            res.status(error.status).redirect("/");
             // Outputs the error to the user
-            res.status(error.status).send(error.message);
+            // res.status(error.status).send(error.message);
         },
         "application/json": () => {
             res.status(error.status)
                 .json({ status: error.status, message: error.message });
         },
-        default: () => {
-            res.status(406).send("NOT APPLICABLE");
-        }
+        default: () => res.status(406).send("NOT ACCEPTABLE")
     })
 });
 

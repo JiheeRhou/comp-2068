@@ -11,7 +11,7 @@ export const index = async (req, res, next) => {
                 res.render("cards/index", { cards, title: "Cards List" });
             },
             "application/json": () => {
-                res.json({ cards });
+                res.json({ status:200, message: "SUCCESS", cards });
             },
             default: () => {
                 res.status(406).send("NOT ACCEPTABLE");
@@ -35,7 +35,7 @@ export const show = async (req, res, next) => {
             "text/html": () => {
                 res.render("cards/show", { card, title: "Card View" });
             },
-            "applkcation/json": () => {
+            "application/json": () => {
                 res.json({ card });
             },
             default: () => {

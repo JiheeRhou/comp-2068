@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { generateRandomHexKey } from "../routes/UserRoutes";
+import { generateRandomHexKey } from "../routes/UserRoutes.js";
 
 const ApplicationSchema = new mongoose.Schema({
     name: {
@@ -16,6 +16,6 @@ const ApplicationSchema = new mongoose.Schema({
         required: true,
         default: (generateRandomHexKey(16))
     }
-});
+}, { timestamps: true });
 
 export default mongoose.model("Application", ApplicationSchema);
